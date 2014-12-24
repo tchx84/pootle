@@ -449,15 +449,18 @@ def get_translated_name_gnu(translation_project, store):
         target_store = None
 
     # is this GNU-style with prefix?
-    use_prefix = store.parent.child_stores.exclude(file="").count() > 1 or \
-                 translation_project.stores.exclude(name__iexact=suffix).exclude(file="").count()
-    if not use_prefix:
-        # let's make sure
-        for tp in translation_project.project.translationproject_set.exclude(language__code='templates').iterator():
-            temp_suffix = tp.language.code + os.extsep + translation_project.project.localfiletype
-            if tp.stores.exclude(name__iexact=temp_suffix).exclude(file="").count():
-                use_prefix = True
-                break
+    #use_prefix = store.parent.child_stores.exclude(file="").count() > 1 or \
+    #             translation_project.stores.exclude(name__iexact=suffix).exclude(file="").count()
+    #if not use_prefix:
+    #    # let's make sure
+    #    for tp in translation_project.project.translationproject_set.exclude(language__code='templates').iterator():
+    #        temp_suffix = tp.language.code + os.extsep + translation_project.project.localfiletype
+    #        if tp.stores.exclude(name__iexact=temp_suffix).exclude(file="").count():
+    #            use_prefix = True
+    #            break
+
+    # XXX many cases where this is not working for Sugar Labs as we don't use prefixes
+    use_prefix = False
 
     if use_prefix:
         if store.translation_project.language.code == 'templates':
